@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #fff0f3;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--soft-pink);
+            overflow: hidden; /* Prevents scrollbars during the swap */
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        h1 {
+            color: var(--primary-pink);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+            min-width: 100px;
+        }
+
+        #yesBtn {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #dee2e6;
+            color: #495057;
+        }
+
+        #message {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: var(--primary-pink);
+            font-weight: bold;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainCard">
+        <h1 id="headline">Will you be my valentine?</h1>
+        
+        <div class="btn-container" id="buttonWrapper">
+            <button id="yesBtn" onclick="sayYes()">Yes</button>
+            <button id="noBtn" onmouseover="swapButtons()" onclick="swapButtons()">No</button>
+        </div>
+
+        <div id="message">You are the cutest! ❤️</div>
+    </div>
+
+    <script>
+        const wrapper = document.getElementById('buttonWrapper');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const message = document.getElementById('message');
+        const headline = document.getElementById('headline');
+
+        function swapButtons() {
+            // Check current order and reverse it
+            if (wrapper.style.flexDirection === "row-reverse") {
+                wrapper.style.flexDirection = "row";
+            } else {
+                wrapper.style.flexDirection = "row-reverse";
+            }
+        }
+
+        function sayYes() {
+            // Hide buttons and show the sweet message
+            wrapper.style.display = "none";
+            headline.style.display = "none";
+            message.style.display = "block";
+        }
+    </script>
+</body>
+</html>
