@@ -4,13 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Be My Valentine?</title>
-    
-    <meta property="og:title" content="Will you be my valentine?">
-    <meta property="og:description" content="I have a very important question for you...">
-    <meta property="og:image" content="thumbnail.jpg"> 
-    <meta property="og:url" content="https://yourdomain.com">
-    <meta name="twitter:card" content="summary_large_image">
-
     <style>
         :root {
             --primary-pink: #ff4d6d;
@@ -26,13 +19,13 @@
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, sans-serif;
             background-color: var(--soft-pink);
-            overflow: hidden; /* Important: keeps the button from creating scrollbars */
-            touch-action: manipulation; /* Optimizes for mobile tapping */
+            overflow: hidden;
+            touch-action: manipulation;
         }
 
         .container {
             text-align: center;
-            padding: 20px;
+            padding: 40px 20px;
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -47,10 +40,14 @@
             margin-bottom: 30px;
         }
 
+        /* This container keeps them side-by-side initially */
         .btn-container {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 20px;
+            min-height: 60px;
+            position: relative;
         }
 
         button {
@@ -60,21 +57,19 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            transition: transform 0.1s;
         }
 
         #yesBtn {
             background-color: var(--primary-pink);
             color: white;
-            z-index: 2;
         }
 
         #noBtn {
             background-color: #dee2e6;
             color: #495057;
-            position: absolute; /* Allows random movement */
-            transition: all 0.2s ease;
-            z-index: 3;
+            /* Initial position is handled by flexbox, 
+               JS will switch this to 'fixed' on first touch */
+            transition: transform 0.1s;
         }
 
         #message {
@@ -110,15 +105,18 @@
         const message = document.getElementById('message');
 
         function moveButton() {
-            // Get screen dimensions minus button size
-            const maxX = window.innerWidth - noBtn.offsetWidth;
-            const maxY = window.innerHeight - noBtn.offsetHeight;
+            // Change to fixed position so it can move relative to the whole screen
+            noBtn.style.position = 'fixed';
+            
+            // Calculate safe boundaries
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
             // Generate random coordinates
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
 
-            // Apply new position
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
         }
